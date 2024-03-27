@@ -1,0 +1,70 @@
+﻿﻿@model IEnumerable<EnglishCoucil.Areas.Admin.Data.ChiTietLichHoc>
+@{
+    ViewBag.Title = "StudentTimetable";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Header Start -->
+<div class="jumbotron jumbotron-fluid page-header position-relative overlay-bottom" style="margin-bottom: 90px;">
+    <div class="container text-center py-5">
+        <h1 class="text-white display-1">Class Schedule</h1>
+        <div class="d-inline-flex text-white mb-5">
+            <p class="m-0 text-uppercase"><a class="text-white" href="@Url.Action("Index", "Home", null , Request.Url.Scheme)">Home</a></p>
+            <i class="fa fa-angle-double-right pt-1 px-3"></i>
+            <p class="m-0 text-uppercase">Class Schedule</p>
+
+        </div>
+        <h5 class="text-black">@ViewBag.Message</h5>
+        <h5 class="text-black"></h5>
+        <div class="mx-auto mb-5" style="width: 100%; max-width: 600px;">
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+<div class="row justify-content-center">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4 mt-5 mt-lg-0">
+            <div class="bg-primary mb-5 py-3">
+                <h3 class="text-white py-3 px-4 m-0">Shift</h3>
+                <div class="d-flex justify-content-between border-bottom px-4">
+                    <h6 class="text-white my-3">Class name</h6>
+                    <h6 class="text-white my-3">@Html.DisplayFor(modelItem => item.LopHoc.TenLopHoc)</h6>
+                </div>
+                <div class="d-flex justify-content-between border-bottom px-4">
+                    <h6 class="text-white my-3">Day</h6>
+                    <h6 class="text-white my-3">
+                        @{
+                            var ngayFormatted = item.LichHoc.Ngay.Value.ToString("dd/MM/yyyy");
+                        }
+
+                        @Html.DisplayFor(m => ngayFormatted)
+                    </h6>
+                </div>
+                <div class="d-flex justify-content-between border-bottom px-4">
+                    <h6 class="text-white my-3">Time</h6>
+                    <h6 class="text-white my-3">
+                        @{
+                            var startTime = item.LichHoc.TGBatDau.Value.ToString("hh\\:mm");
+                            var endTime = item.LichHoc.TGKetThuc.Value.ToString("hh\\:mm");
+                        }
+
+                        @Html.DisplayFor(m => startTime) - @Html.DisplayFor(m => endTime)
+                    </h6>
+                </div>
+                <div class="d-flex justify-content-between border-bottom px-4">
+                    <h6 class="text-white my-3">Course</h6>
+                    <h6 class="text-white my-3">@Html.DisplayFor(modelItem => item.LopHoc.ChuongTrinhHoc.TenChuongTrinh)</h6>
+                </div>
+                <div class="d-flex justify-content-between border-bottom px-4">
+                    <h6 class="text-white my-3">Instructor</h6>
+                    <h6 class="text-white my-3">@Html.DisplayFor(modelItem => item.LopHoc.GiangVien.TenGiangVien)</h6>
+                </div>
+                <div class="d-flex justify-content-between px-4">
+                    <h6 class="text-white my-3">Language</h6>
+                    <h6 class="text-white my-3">English</h6>
+                </div>
+            </div>
+        </div>
+    }
+</div>

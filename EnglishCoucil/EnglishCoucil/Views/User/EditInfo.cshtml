@@ -1,0 +1,177 @@
+﻿﻿@model EnglishCoucil.Models.AccountInfo
+@{
+    ViewBag.Title = "EditInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@if (Session["IDhv"] != null)
+{
+    <!-- Header Start -->
+    <div class="jumbotron jumbotron-fluid page-header position-relative overlay-bottom" style="margin-bottom: 90px;">
+        <div class="container text-center py-5">
+            <h1 class="text-white display-1">Change Infomation</h1>
+            <div class="d-inline-flex text-white mb-5">
+                <p class="m-0 text-uppercase"><a class="text-white" href="@Url.Action("Index", "Home", null , Request.Url.Scheme)">Home</a></p>
+                <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                <p class="m-0 text-uppercase">Change Infomation</p>
+            </div>
+            <div class="form-group text-white">
+                <b>User Name</b>
+                <div class="col-md-3 mx-auto text-white">
+                    @Html.DisplayFor(model => model.Username)
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+<div style="text-align:center; color:forestgreen">@ViewBag.Success</div>
+
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IDHocVien)
+        <h2 style="color:red; text-align:center">@ViewBag.Success</h2>
+        <div class="row align-items-center justify-content-center">
+            <div class="col-lg-7">
+                <div class="section-title position-relative mb-4">
+                    <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Change Infomation</h6>
+                    <h1 class="display-4">Infomation</h1>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="row">
+                            <div class="col-6 form-group">
+                                <h5 style="color:darkgray; font-size:15px;">Name</h5>
+                                <input class="form-control border-top-0 border-right-0 border-left-0 p-0" @Html.EditorFor(model => model.TenHocVien, new { htmlAttributes = new { @class = "form-control" } })
+                                       @Html.ValidationMessageFor(model => model.TenHocVien, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-6 form-group">
+                                <h5 style="color:darkgray; font-size:15px;">Day of Birth <small>*Noted (Month/Day/Year)</small></h5>
+                                @{
+                                    var ngaySinhFormatted = Model.NgaySinh?.ToString("MM/dd/yyyy");
+                                }
+                                <input class="form-control border-top-0 border-right-0 border-left-0 p-0" @Html.TextBoxFor(model => model.NgaySinh, "{0:MM/dd/yyyy}", new { @class = "form-control", @Value = ngaySinhFormatted })
+                                       @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h5 style="color:darkgray; font-size:15px;">Address</h5>
+                            <input class="form-control border-top-0 border-right-0 border-left-0 p-0" @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                                   @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="row">
+                            <div class="col-6 form-group">
+                                <h5 style="color:darkgray; font-size:15px;">Phone</h5>
+                                <input class="form-control border-top-0 border-right-0 border-left-0 p-0" @Html.EditorFor(model => model.SoDienThoai, new { htmlAttributes = new { @class = "form-control" } })
+                                       @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-6 form-group">
+                                <h5 style="color:darkgray; font-size:15px;">Email</h5>
+                                <input class="form-control border-top-0 border-right-0 border-left-0 p-0" @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                       @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.EditorFor(model => model.Hinh, new { htmlAttributes = new { @class = "form-control" } })
+                            <div class="image-preview">
+                                <img id="pictureUpload" src="@Model.Hinh" alt="Hình ảnh" />
+                            </div>
+                            <input type="file" name="fileUpload" id="fileUpload" accept="image/*" style="display:none;" />
+                            <input type="button" id="btnUpload" value="Select" class="btn btn-primary py-2 px-4 d-none d-lg-block" />
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-primary py-3 px-5" type="submit">Submit</button>
+                            <a href="@Url.Action("Index", "Home", null, Request.Url.Scheme)" class="btn btn-primary py-3 px-5">Back</a>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+
+}
+else
+{
+    <!-- Header Start -->
+    <div class="jumbotron jumbotron-fluid page-header position-relative overlay-bottom" style="margin-bottom: 90px;">
+        <div class="container text-center py-5">
+            <h1 class="text-white display-1">Account</h1>
+            <div class="d-inline-flex text-white mb-5">
+                <p class="m-0 text-uppercase"><a class="text-white" href="@Url.Action("Index", "Home", null , Request.Url.Scheme)">Home</a></p>
+                <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                <p class="m-0 text-uppercase">Account</p>
+            </div>
+            <div class="form-group text-white">
+                <b>User Name</b>
+                <div class="col-md-3 mx-auto text-white">
+                    @Html.DisplayFor(model => model.Username)
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container text-center py-5">
+        <h2>You have not registered as a student</h2>
+        <h5> <a href="@Url.Action("AllCource", "User", null, Request.Url.Scheme)" class="btn btn-secondary btn-lg px-4 px-lg-5 mx-auto">JOIN?</a></h5>
+    </div>
+    <!-- Header End -->
+}
+
+
+@*hình ảnh*@
+<style>
+    .image-preview {
+        max-width: 200px; /* Điều chỉnh kích thước tối đa của khung hình ảnh */
+        max-height: 200px;
+        overflow: hidden; /* Ẩn bớt nội dung hình ảnh */
+    }
+
+        .image-preview img {
+            max-width: 100%; /* Điều chỉnh kích thước tối đa của hình ảnh */
+            max-height: 100%;
+            object-fit: contain; /* Đảm bảo hình ảnh không bị méo khi thu nhỏ */
+        }
+</style>
+
+
+
+@section upload
+{
+    <script>
+        $(function () {
+            $('#btnUpload').click(function () {
+                $('#fileUpload').trigger('click');
+            });
+        });
+
+        $('#fileUpload').change(function () {
+            if (window.FormData !== undefined) {
+                var fileUpload = $('#fileUpload').get(0);
+                var files = fileUpload.files;
+                var formData = new FormData();
+                formData.append('file', files[0]);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ProcessUpload", "QLHocvien", new { area = "Admin" })',
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function (urlImage) {
+                        $('#pictureUpload').attr('src', urlImage);
+                        $('#Hinh').val(urlImage);
+                    },
+                    error: function (err) {
+                        alert('Error ' + err.statusText);
+                    }
+                });
+            }
+        });
+
+    </script>
+}

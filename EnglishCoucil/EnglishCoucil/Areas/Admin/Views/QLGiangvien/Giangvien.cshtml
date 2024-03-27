@@ -1,0 +1,129 @@
+﻿@model IEnumerable<EnglishCoucil.Areas.Admin.Data.GiangVien>
+
+@{
+    ViewBag.Title = "Giangvien";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAD.cshtml";
+}
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách giảng viên</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("HomeQL", "HomeAdmin", new { Area = "Admin" })">Home</a></li>
+                    <li class="breadcrumb-item active">Danh sách giảng viên</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+@if (TempData["SuccessMessage"] != null)
+{
+    ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
+    TempData.Remove("SuccessMessage");
+}
+<p style="text-align:center">
+    <a href=" @Url.Action("Themgiangvien", "QLGiangvien")" class="btn btn-outline-warning">Thêm giảng viên</a>
+</p>
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
+    TempData.Remove("SuccessMessage");
+}
+<div class="content">
+    <div class="container-fluid">
+        <table class="table">
+            <tr>
+                <th>
+                    Mã giảng viên
+                </th>
+                <th>
+                    Tên giảng viên
+                </th>
+                <th>
+                    Địa chỉ
+                </th>
+                <th>
+                    Số điện thoại
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Lương
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr class="search">
+                    <th>
+                        @Html.DisplayFor(model => item.IDGiangvien)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenGiangVien)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiaChi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoDienThoai)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Luong)
+                    </td>
+                    <td>
+                        <a href=" @Url.Action("Suagiangvien", "QLGiangvien", new { IDgv = item.IDGiangvien })" class="btn btn-outline-primary btn-sm">Edit</a>
+                        <a href=" @Url.Action("Xemchitiet", "QLGiangvien", new { IDgv = item.IDGiangvien })" class="btn btn-outline-info btn-sm">Detail</a>
+                        <a href="@Url.Action("Xoagiangvien", "QLGiangvien", new { IDgv = item.IDGiangvien })" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">
+                            <button class="btn btn-outline-danger btn-sm">Del</button>
+                        </a>
+                        @{
+                            bool isValid = true;
+                            if (item.IDGiangvien == 0 || ViewBag.idaction == 0)
+                            {
+                                isValid = false;
+                            }
+                        }
+
+                        @if (isValid && ViewBag.idaction == 1)
+                        {
+                            <a href=" @Url.Action("Themlophocdacogv", "QLLophoc", new { IDgv = item.IDGiangvien })" class="btn btn-outline-secondary btn-sm">AddToClass</a>
+                        }
+                        else
+                        {
+                            <div></div>
+                        }
+                        @if (isValid && ViewBag.idaction == 2)
+                        {
+                            <a href=" @Url.Action("Sualophoccogv", "QLLophoc", new { IDgv = item.IDGiangvien, IDlh = ViewBag.idlh  })" class="btn btn-outline-secondary btn-sm">AddToClass</a>
+                           
+                        }
+                        else
+                        {
+                            <div></div>
+                        }
+
+                    </td>
+                </tr>
+
+            }
+
+
+        </table>
+    </div>
+ </div>
+

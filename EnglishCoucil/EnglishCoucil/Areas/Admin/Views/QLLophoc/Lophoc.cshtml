@@ -1,0 +1,115 @@
+﻿
+@model IEnumerable<EnglishCoucil.Areas.Admin.Data.LopHoc>
+
+@{
+    ViewBag.Title = "Lophoc";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAD.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách lớp học</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("HomeQL", "HomeAdmin", new { Area = "Admin" })">Home</a></li>
+                    <li class="breadcrumb-item active">Danh sách lớp học</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+@if (TempData["AlertMessage"] != null)
+{
+    ViewBag.AlertMessage = TempData["AlertMessage"].ToString();
+    TempData.Remove("AlertMessage");
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
+    TempData.Remove("SuccessMessage");
+}
+<p style="text-align:center;">
+    <a href=" @Url.Action("Themlophoc", "QLLophoc")" class="btn btn-outline-warning">Thêm lớp học</a>
+</p>
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+}
+@if (ViewBag.AlertMessage != null)
+{
+    <div class="alert alert-danger">@ViewBag.AlertMessage</div>
+}
+@if (TempData["AlertMessage"] != null)
+{
+    ViewBag.AlertMessage = TempData["AlertMessage"].ToString();
+    TempData.Remove("AlertMessage");
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    ViewBag.ErrorMessage = TempData["ErrorMessage"].ToString();
+    TempData.Remove("ErrorMessage");
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    ViewBag.ErrorMessage = TempData["ErrorMessage"].ToString();
+    TempData.Remove("ErrorMessage");
+}
+<div class="content">
+    <div class="container-fluid">
+        <table class="table">
+            <tr>
+                <th>
+                    Mã lớp học
+                </th>
+                <th>
+                    Tên lớp
+                </th>
+                <th>
+                    Tên giảng viên
+                </th>
+                <th>
+                    Tên chương trình
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr class="search">
+                    <th>
+                        @Html.DisplayFor(model => item.IDLophoc)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenLopHoc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GiangVien.TenGiangVien)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ChuongTrinhHoc.TenChuongTrinh)
+                    </td>
+
+                    <td>
+                        <a href=" @Url.Action("themhvvaolop", "QLLophoc", new { IDlh = item.IDLophoc })" class="btn btn-outline-secondary btn-sm">Add Student</a>
+                        <a href=" @Url.Action("ThemlophocvaoCaHoc", "QLLophoc", new { IDlh = item.IDLophoc })" class="btn btn-outline-secondary btn-sm">Add Shift</a>
+                        <a href=" @Url.Action("Xemhvtronglop", "QLLophoc", new { IDlh = item.IDLophoc })" class="btn btn-outline-secondary btn-sm">View Class</a>
+                        <a href=" @Url.Action("ShiftinClass", "QLLophoc", new { IDlh = item.IDLophoc })" class="btn btn-outline-secondary btn-sm">View All</a>
+                        <a href=" @Url.Action("Sualophoc", "QLLophoc", new { IDlh = item.IDLophoc })" class="btn btn-outline-primary btn-sm">Edit</a>
+                        <a href="@Url.Action("Xoalophoc", "QLLophoc", new { IDlh = item.IDLophoc })" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">
+                            <button class="btn btn-outline-danger btn-sm">Del</button>
+                        </a>
+                    </td>
+
+                </tr>
+            }
+        </table>
+    </div>
+</div>

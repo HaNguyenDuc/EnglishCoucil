@@ -1,0 +1,61 @@
+﻿@model EnglishCoucil.Areas.Admin.Data.LopHoc
+@{
+    ViewBag.Title = "ThemlophocvaoCaHoc";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAD.cshtml";
+}
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thêm lớp học vào ca học</h1>
+                <h4>Lớp học: @Model.TenLopHoc</h4>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("HomeQL", "HomeAdmin", new { Area = "Admin" })">Home</a></li>
+                    <li class="breadcrumb-item active">Thêm lớp học vào ca học</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+@if (TempData["ErrorMessage"] != null)
+{
+    ViewBag.ErrorMessage = TempData["ErrorMessage"].ToString();
+    TempData.Remove("ErrorMessage");
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    ViewBag.ErrorMessage = TempData["ErrorMessage"].ToString();
+    TempData.Remove("ErrorMessage");
+}
+<div class="content">
+    <div class="container-fluid">
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(model => model.IDLophoc, new { IDlh = ViewBag.IDlh })
+            <div class="form-group">
+                <label>Ca học:</label>
+                <p>Ngày: @ViewBag.Ngay</p>
+                <p>Thời gian bắt đầu: @ViewBag.TGBatdau</p>
+                <p>Thời gian kết thúc: @ViewBag.TGKetthuc</p>
+                <div>
+                    <div>
+                        <a href=" @Url.Action("Cahoc", "QLLichhoc", new { IDlh = Model.IDLophoc, IDaction = 1 }, null)" class="btn btn-outline-danger btn-sm">Choose</a>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-outline-success">Thêm</button>
+        }
+        <div style="text-align:center">
+            <a href=" @Url.Action("Lophoc", "QLLophoc")" class="btn btn-success">Back</a>
+        </div>
+    </div>
+</div>

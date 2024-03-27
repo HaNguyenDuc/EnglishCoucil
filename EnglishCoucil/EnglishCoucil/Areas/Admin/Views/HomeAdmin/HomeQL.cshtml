@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "HomeQL";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAD.cshtml";
+}
+
+<h2 style="text-align:center">Danh sách quản lý</h2>
+
+<main class="container text-center">
+
+    <div class="col">
+        <h4>Quản lý học viên, giảng viên</h4>
+        <hr />
+        <div class="btn btn-default">
+            <a class="anchor" href="@Url.Action("Hocvien", "QLHocvien", new { Area = "Admin" })">Học viên</a>
+
+
+        </div>
+        <div class="btn btn-default">
+            <a class="anchor" href="@Url.Action("Giangvien", "QLGiangvien", new { Area = "Admin" })">Giảng viên</a>
+        </div>
+    </div>
+
+    <div class="col">
+        <h4>Quản lý chương trình học, lớp học, ca học, lịch học</h4>
+        <hr />
+        <div class="btn btn-default">
+            <a class="anchor" href="@Url.Action("Chuongtrinhhoc", "QLchuongtrinhhoc", null, Request.Url.Scheme)">Chương trình học</a>
+        </div>
+        <div class="btn btn-default">
+            <a class="anchor" href="@Url.Action("Lophoc", "QLLophoc", null, Request.Url.Scheme)">Lớp học</a>
+        </div>
+        <div class="btn btn-default">
+            <a class="anchor" href="@Url.Action("Cahoc", "QLLichhoc", null, Request.Url.Scheme)">Ca học</a>
+        </div>
+        <div class="btn btn-default">
+            <a class="anchor" href="@Url.Action("ShiftinClass", "QLLophoc", null, Request.Url.Scheme)">Lịch học</a>
+        </div>
+    </div>
+    <div class="col">
+        <h4>
+            Quản lý tài khoản Học viên
+        </h4>
+        <hr />
+        <div class="btn btn-default">
+            <a class="anchor" href="@Url.Action("UserAccount", "Account", null, Request.Url.Scheme)">Tài khoản học viên</a>
+        </div>
+    </div>
+    <div class="col">
+        <h4>
+            Thống kê
+        </h4>
+        <hr />
+        <div class="btn btn-default">
+            <a class="anchor" href="@Url.Action("StaticView", "Statistics", null, Request.Url.Scheme)">Thống kê</a>
+        </div>
+    </div>
+</main>
+

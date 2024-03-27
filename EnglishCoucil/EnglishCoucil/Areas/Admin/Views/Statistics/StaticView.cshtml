@@ -1,0 +1,130 @@
+﻿@model IEnumerable<EnglishCoucil.Areas.Admin.Data.ChiTietLopHoc>
+@{
+    ViewBag.Title = "StaticView";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAD.cshtml";
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thống kê</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("HomeQL", "HomeAdmin", new { Area = "Admin" })">Home</a></li>
+                    <li class="breadcrumb-item active">Thống kê</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@{
+    double? totals = 0;
+}
+<div class="card-body float-right">
+    Thống kê theo:
+    <input type="text" id="monthInput" class="form-control-sm input-field input-field" placeholder="Nhập tháng">
+    <input type="text" id="yearInput" class="form-control-sm input-field input-field" placeholder="Nhập năm">
+</div>
+<div class="card-body">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Học viên</th>
+                <th>Lớp học</th>
+                <th>Giá tiền</th>
+                <th>
+                    Ngày nộp tiền
+                </th>
+
+            </tr>
+        </thead>
+        <tbody class="search">
+            <!-- Thêm một class cho từng hàng để chúng ta có thể ẩn hiện dễ dàng -->
+            @foreach (var item in Model)
+            {
+                <tr class="data-row">
+                    <td>@item.HocVien.TenHocVien</td>
+                    <td>@item.LopHoc.TenLopHoc</td>
+                    <td>@item.LopHoc.ChuongTrinhHoc.GiaTien</td>
+                    @if (item.NgayNopTien != null)
+                    {
+                        <td class="date">@item.NgayNopTien.Value.ToString("dd/MM/yyyy")</td>
+                    }
+                    else
+                   {
+                        <td></td> 
+                     }
+
+                </tr>
+                totals += @item.LopHoc.ChuongTrinhHoc.GiaTien;
+            }
+        </tbody>
+    </table>
+    <div class="card-body">
+        <!-- Các phần tử HTML khác -->
+        <div id="totalRevenue" class="float-right">Tổng doanh thu: @totals</div>
+    </div>
+</div>
+<style>
+    .form-control-sm input-field input-field {
+        display: inline-block;
+        margin-right: 10px;
+    }
+</style>
+
+<script>
+    //sử dụng sự kiện input bằng cách sử dụng addEventListener
+    //Khi người dùng nhập giá trị trong thẻ input, hàm filterData được gọi.
+    document.getElementById('monthInput').addEventListener('input', filterData);
+    document.getElementById('yearInput').addEventListener('input', filterData);
+    // Trong hàm filterData, giá trị tháng và năm được lấy từ các thành phần < input > và sau đó được xử lý
+    function filterData() {
+        var inputMonth = document.getElementById('monthInput').value.trim();
+        //.trim là phương thức được gọi trên chuỗi giá trị để xóa khoảng trắng ở đầu và cuối chuỗi, nếu có.
+        var inputYear = document.getElementById('yearInput').value.trim();
+        //.getElementsByClassName trả về một HTMLCollection chứa tất cả các phần tử có lớp CSS tên là "data-row"
+        var dataRows = document.getElementsByClassName('data-row');
+        var totalRevenue = 0;
+        // ở vòng lặp for được sử dụng để duyệt qua từng hàng dữ liệu trong bảng.
+
+        //và được chuyển đổi thành đối tượng Date để lấy thông tin về tháng và năm:
+        for (var i = 0; i < dataRows.length; i++) {
+            var rowData = dataRows[i];
+            //Với mỗi hàng, giá trị của phần tử đầu tiên ([0]) của ngày tháng được lấy từ cột có class là 'date'
+            var dateCell = rowData.getElementsByClassName('date')[0];
+            //chia chuỗi văn bản (dateCell) và sử dụng theo dấu '/'
+            var dateParts = dateCell.innerText.split('/');
+            //formattedDate sẽ định dạng lại chuỗi thành tháng ngày năm ([1]) là tháng , ([0]) là ngày , ([2]) là năm
+            var formattedDate = dateParts[1] + '/' + dateParts[0] + '/' + dateParts[2];
+            //chuyển đổi formattedDate từ dạng chuỗi về lại dạng Date
+            var date = new Date(formattedDate);
+            //từ date đã đc gán bằng ngày tháng đã định dang thì sẽ lấy tháng (vì là getmonth trả về là 0-11) nên sẽ + thêm 1 cho đúng với tháng 1- 12
+            var month = date.getMonth() + 1;
+            //lấy năm từ date qua phương thức .getFullYear()
+            var year = date.getFullYear();
+            //lấy dữ liệu từ dòng có thẻ <td> thứ 3 do thẻ <td> được đánh số là 0,1,...
+            var revenueCell = rowData.getElementsByTagName('td')[2];
+            //từ revenueCell đã lấy được thì sẽ lấy dữ liệu (innerText) và bỏ dấu ',' nếu chuỗi số đấy có dấu ','(replace(',', ''))
+            var revenue = parseFloat(revenueCell.innerText.replace(',', ''));
+            // Sau đó, điều kiện if được sử dụng để kiểm tra xem hàng dữ liệu có khớp với giá trị tháng và năm đã nhập hay không.
+
+            // hàng dữ liệu sẽ được hiển thị bằng cách đặt display thành "table-row"
+            //includes được sử dụng để kiểm tra xem một chuỗi có chứa một chuỗi con khác hay không
+            if ((inputMonth === '' || month.toString().includes(inputMonth)) && (inputYear === '' || year.toString().includes(inputYear))) {
+                rowData.style.display = 'table-row';
+                totalRevenue += revenue;
+                //Nếu không, hàng dữ liệu sẽ được ẩn bằng cách đặt display thành "none",
+            } else {
+                rowData.style.display = 'none';
+            }
+        }
+        //cập nhật giá trị có id là totalRevenue
+        var totalRevenueElement = document.getElementById('totalRevenue');
+        //.innerText để đặt 1 nội dung có dang chuỗi
+        //  Math.floor() là hàm được làm tròn xuống để hiển thị giá trị tổng doanh thu là một số nguyên.
+        totalRevenueElement.innerText = 'Tổng doanh thu: ' + Math.floor(totalRevenue);
+    }
+</script>

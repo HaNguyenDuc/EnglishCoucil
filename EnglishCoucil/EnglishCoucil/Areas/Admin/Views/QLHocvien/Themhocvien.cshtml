@@ -1,0 +1,165 @@
+﻿﻿@model EnglishCoucil.Areas.Admin.Data.HocVien
+@{
+    ViewBag.Title = "Themhocvien";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAD.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thêm học viên</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("HomeQL", "HomeAdmin", new { Area = "Admin" })">Home</a></li>
+                    <li class="breadcrumb-item active">Thêm học viên</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="content">
+    <div class="container-fluid">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <b>Tên học viên:</b>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control form-control-user" placeholder="Nhập Tên (Ex: Nguyen Van A)" name="Tenhocvien">
+                    <div style="color:red;">@ViewData["Loi2"]</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <b>Ngày sinh:</b>
+                <div class="col-sm-12">
+                    <input type="text" id="txtNgaySinh" name="Ngaysinh" placeholder="dd/mm/yyyy" />
+                    <div style="color:red;">@ViewData["Loi3"]</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <b>Địa chỉ:</b>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control form-control-user" id="exampleUsername" placeholder="Nhập Địa Chỉ" name="DiaChi">
+                    <div style="color:red;">@ViewData["Loi4"]</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <b>Số điện thoại:</b>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control form-control-user" id="exampleUsername" placeholder="Nhập Số điện thoại" name="Phone">
+                    <div style="color:red;">@ViewData["Loi5"]</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <b>Email:</b>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control form-control-user" id="exampleUsername" placeholder="Nhập Email (Ex: abc@example.com)" name="Email">
+                    <div style="color:red;">@ViewData["Loi6"]</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <b>Ngày đăng kí:</b>
+                <div class="col-sm-12">
+                    <input type="text" id="txtNgatDK" name="NgayDK" placeholder="dd/mm/yyyy" />
+                    <div style="color:red;">@ViewData["Loi7"]</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <b>Hình ảnh</b>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Hinh, new { htmlAttributes = new { @class = "form-control" } })
+                    <div class="image-preview">
+                        <img id="pictureUpload" src="" alt="Hình ảnh" />
+                    </div>
+                    <input type="file" name="fileUpload" id="fileUpload" accept="image/*" style="display:none;" />
+                    <input type="button" id="btnUpload" value="Chọn" class="btn btn-success" />
+                </div>
+            </div>
+            <div class="form-group">
+                <b>Trạng thái học:</b>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.DropDownList("IDTrangThai")
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-outline-success" />
+                </div>
+            </div>
+        </div>
+        }
+        <div style="text-align:center">
+            <a href=" @Url.Action("Hocvien", "QLHocvien")" class="btn btn-sm btn-info">Back</a>
+        </div>
+    </div>
+</div>
+@*hình ảnh*@
+<style>
+    .image-preview {
+        max-width: 200px; /* Điều chỉnh kích thước tối đa của khung hình ảnh */
+        max-height: 200px;
+        overflow: hidden; /* Ẩn bớt nội dung hình ảnh */
+    }
+
+        .image-preview img {
+            max-width: 100%; /* Điều chỉnh kích thước tối đa của hình ảnh */
+            max-height: 100%;
+            object-fit: contain; /* Đảm bảo hình ảnh không bị méo khi thu nhỏ */
+        }
+</style>
+
+@section upload
+{
+    <script>
+        $(function () {
+             //khi người dùng nhấn vào nút có id là btnUpload
+            $('#btnUpload').click(function () {
+                 //được gọi để kích hoạt sự kiện chọn tệp tin từ người dùng
+                $('#fileUpload').trigger('click');
+            });
+             //khi người dùng đã chọn một tệp tin hình ảnh
+            $('#fileUpload').change(function () {
+                  // kiểm tra xem trình duyệt có hỗ trợ đối tượng FormData hay không
+                if (window.FormData !== undefined) {
+                    var fileUpload = $('#fileUpload').get(0);
+                    var files = fileUpload.files;
+                    var formData = new FormData();
+                    formData.append('file', files[0]);
+                     //sử dụng AJAX để gửi yêu cầu POST tới đường dẫn action ProcessUpload trong QLHocvien để xử lý tải lên hình ảnh.
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("ProcessUpload", "QLHocvien", new { area = "Admin" })',
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                         // hình ảnh được hiển thị lên trang bằng cách cập nhật thuộc tính src của phần tử có id là pictureUpload
+                       //và lưu vào phần tử có id là Hinh
+                        success: function (urlImage) {
+                            $('#pictureUpload').attr('src', urlImage);
+                            $('#Hinh').val(urlImage);
+                        },
+                        error: function (err) {
+                            alert('Error ' + err.statusText);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

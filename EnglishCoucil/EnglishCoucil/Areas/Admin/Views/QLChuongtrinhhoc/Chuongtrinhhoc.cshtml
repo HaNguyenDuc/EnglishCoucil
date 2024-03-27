@@ -1,0 +1,137 @@
+﻿@model IEnumerable<EnglishCoucil.Areas.Admin.Data.ChuongTrinhHoc>
+
+@{
+    ViewBag.Title = "Chuongtrinhhoc";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAD.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách chương trình học</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("HomeQL", "HomeAdmin", new { Area = "Admin" })">Home</a></li>
+                    <li class="breadcrumb-item active">Danh sách chương trình học</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+@if (TempData["SuccessMessage"] != null)
+{
+    ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
+    TempData.Remove("SuccessMessage");
+}
+<p style="text-align:center;">
+    <a href=" @Url.Action("Themchuongtrinh", "QLchuongtrinhhoc")" class="btn btn-outline-warning">Thêm chương trình</a>
+</p>
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
+    TempData.Remove("SuccessMessage");
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    ViewBag.ErrorMessage = TempData["ErrorMessage"].ToString();
+    TempData.Remove("ErrorMessage");
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+<div class="content">
+    <div class="container-fluid">
+        <table class="table">
+            <tr>
+                <th>
+                    Mã chương trình
+                </th>
+                <th>
+                    Tên
+                </th>
+                <th>
+                    Số buổi học
+                </th>
+                <th>
+                    Thời lượng
+                </th>
+                <th>
+                    Giá
+                </th>
+                <th>
+                    Mô tả
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr class="search">
+                    <th>
+                        @Html.DisplayFor(model => item.IDChuongTrinh)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenChuongTrinh)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoBuoiHoc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ThoiLuong)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GiaTien)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MoTa)
+                    </td>
+                    <td>
+
+                        <a href=" @Url.Action("Suachuongtrinh", "QLchuongtrinhhoc", new { IDct = item.IDChuongTrinh })" class="btn btn-outline-primary btn-sm">Edit</a>
+                        <a href=" @Url.Action("Xemchitiet", "QLchuongtrinhhoc", new { IDct = item.IDChuongTrinh })" class="btn btn-outline-info btn-sm">Detail</a>
+                        <a href="@Url.Action("Xoachuongtrinh", "QLchuongtrinhhoc", new { IDct = item.IDChuongTrinh })" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">
+                            <button class="btn btn-outline-danger btn-sm">Del</button>
+                        </a>
+                        @{
+                            bool isValid = true;
+                            if (item.IDChuongTrinh == 0 || ViewBag.idaction == 0)
+                            {
+                                isValid = false;
+                            }
+                        }
+
+                        @if (isValid && ViewBag.idaction == 1)
+                        {
+                            <a href=" @Url.Action("Themlophocdacoct", "QLLophoc",new { IDct = item.IDChuongTrinh, Idremen = ViewBag.idgv }, null)" class="btn btn-outline-secondary btn-sm">AddToClass</a>
+
+                        }
+                        else
+                        {
+                            <div></div>
+                        }
+                        @if (isValid && ViewBag.idaction == 2)
+                        {
+                            <a href=" @Url.Action("Sualophoccoct", "QLLophoc", new { IDct = item.IDChuongTrinh, Idremen = ViewBag.idgv, IDlh = ViewBag.idlh }, null)" class="btn btn-outline-secondary btn-sm">AddToClass</a>
+                           
+                        }
+                        else
+                        {
+                            <div></div>
+                        }
+
+
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

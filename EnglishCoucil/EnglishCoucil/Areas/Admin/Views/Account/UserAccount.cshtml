@@ -1,0 +1,93 @@
+﻿@model IEnumerable<EnglishCoucil.Areas.Admin.Data.UserAccount>
+
+
+@{
+    ViewBag.Title = "UserAccount";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAD.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh các tài khoản người dùng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("HomeQL", "HomeAdmin", new { Area = "Admin" })">Home</a></li>
+                    <li class="breadcrumb-item active">Danh các tài khoản người dùng</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+@if (TempData["SuccessMessage"] != null)
+{
+    ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
+    TempData.Remove("SuccessMessage");
+}
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
+    TempData.Remove("SuccessMessage");
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    ViewBag.ErrorMessage = TempData["ErrorMessage"].ToString();
+    TempData.Remove("ErrorMessage");
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+<div class="content">
+    <div class="container-fluid">
+        <table class="table">
+            <tr>
+                <th>
+                   Tài khoản
+                </th>
+                <th>
+                    Tên học viên
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+            <tr class="search">
+                @if (item.TaiKhoan != null && item.TenHocVien != null)
+                {
+                    <td>
+                        @Html.DisplayFor(model => item.TaiKhoan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.TenHocVien)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Suachuongtrinh", new { id = item.IDTaiKhoan })
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(model => item.TaiKhoan)
+                    </td>
+                    <td>
+                        Chưa đăng ký học
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "", new { id = item.IDTaiKhoan }) |
+                        @Html.ActionLink("Delete", "DeleteUser", new { id = item.IDTaiKhoan })
+                    </td>
+                }
+            </tr>
+            }
+        </table>
+    </div>
+</div>

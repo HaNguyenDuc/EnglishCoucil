@@ -1,0 +1,96 @@
+﻿@model IEnumerable<EnglishCoucil.Areas.Admin.Data.LichHoc>
+
+@{
+    ViewBag.Title = "Cahoc";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAD.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách ca học</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("HomeQL", "HomeAdmin", new { Area = "Admin" })">Home</a></li>
+                    <li class="breadcrumb-item active">Danh sách ca học</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
+    TempData.Remove("SuccessMessage");
+}
+
+<p style="text-align:center;">
+    <a href=" @Url.Action("Themcahoc", "QLlichhoc")" class="btn btn-outline-warning">Thêm ca học</a>
+</p>
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
+    TempData.Remove("SuccessMessage");
+}
+
+
+<div class="content">
+    <div class="container-fluid">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ngày</th>
+                    <th>Thứ</th>
+                    <th>Thời gian bắt đầu</th>
+                    <th>Thời gian kết thúc</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="search">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Ngay.Value.ToString("dd/MM/yyyy")</td>
+                        <td>@item.CacNgayTrongTuan.TenNgay</td>
+                        <td>@item.TGBatDau.Value.ToString("hh\\:mm")</td>
+                        <td>@item.TGKetThuc.Value.ToString("hh\\:mm")</td>
+                        <td>
+                            @{
+                                bool isValid = true;
+                                if (item.IDLichhoc == 0 || ViewBag.idaction == 0)
+                                {
+                                    isValid = false;
+                                }
+                            }
+
+                            @if (isValid && ViewBag.IDaction == 1)
+                            {
+                                <a href=" @Url.Action("Suacahoc", "QLLichhoc", new { IDCaHoc = item.IDLichhoc })" class="btn btn-outline-primary btn-sm">Edit</a>
+                                <a href=" @Url.Action("ThemlophocvaoCaHoc", "QLLophoc", new { IDlh = ViewBag.IDlh, IDCaHoc = item.IDLichhoc })" class="btn btn-outline-primary btn-sm">AddToClass</a>
+                                <a href="@Url.Action("Xoacahoc", "QLLichhoc", new { IDch = item.IDLichhoc })" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">
+                                    <button class="btn btn-outline-danger btn-sm">Del</button>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href=" @Url.Action("Suacahoc", "QLLichhoc", new { IDCaHoc = item.IDLichhoc })" class="btn btn-outline-primary btn-sm">Edit</a>
+                                <a href=" @Url.Action("Lophoc", "QLLophoc", null, Request.Url.Scheme)" class="btn btn-outline-primary btn-sm">AddClass</a>
+                                <a href="@Url.Action("Xoacahoc", "QLLichhoc", new { IDch = item.IDLichhoc })" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">
+                                    <button class="btn btn-outline-danger btn-sm">Del</button>
+                                </a>
+                            }
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

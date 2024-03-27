@@ -1,0 +1,125 @@
+﻿﻿@model EnglishCoucil.Models.AccountInfo
+@{
+    ViewBag.Title = "showInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@if (Session["IDhv"] != null)
+{
+    <!-- Header Start -->
+    <div class="jumbotron jumbotron-fluid page-header position-relative overlay-bottom" style="margin-bottom: 90px;">
+        <div class="container text-center py-5">
+            <h1 class="text-white display-1">Account</h1>
+            <div class="d-inline-flex text-white mb-5">
+                <p class="m-0 text-uppercase"><a class="text-white" href="@Url.Action("Index", "Home", null , Request.Url.Scheme)">Home</a></p>
+                <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                <p class="m-0 text-uppercase">Account</p>
+            </div>
+            <div class="form-group text-white">
+                <b>User Name</b>
+                <div class="col-md-3 mx-auto text-white">
+                    @Html.DisplayFor(model => model.Username)
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row align-items-center justify-content-center">
+            <div class="col-lg-7">
+                <div class="section-title position-relative mb-4">
+                    <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Your infomation</h6>
+                    <h1 class="display-4">Infomation</h1>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="row">
+                            <div class="col-6 form-group">
+                                <b>ID Student:</b>
+                                @Html.DisplayFor(model => model.IDHocVien)
+                            </div>
+                            <div class="col-6 form-group">
+                                <b>Name:</b>
+                                @Html.DisplayFor(model => model.TenHocVien)
+                            </div>
+                            <div class="col-6 form-group ">
+                                <b>Date of birth:</b>
+                                @{
+                                    var ngaySinhFormatted = Model.NgaySinh?.ToString("dd/MM/yyyy");
+                                }
+                                @Html.DisplayFor(model => ngaySinhFormatted)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <b>Address:</b>
+                            @Html.DisplayFor(model => model.DiaChi)
+                        </div>
+                        <div class="row">
+                            <div class="col-6 form-group">
+                                <b>Phone:</b>
+                                @Html.DisplayFor(model => model.SoDienThoai)
+                            </div>
+                            <div class="col-6 form-group">
+                                <b>Email:</b>
+                                @Html.DisplayFor(model => model.Email)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="image-preview">
+                                <b>Image:</b>
+                                <img id="pictureUpload" src="@Model.Hinh" alt="Hình ảnh" />
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <a href="@Url.Action("EditInfo", "User", new {IDtk = Session["IDtk"] }, Request.Url.Scheme)" class="btn btn-primary py-3 px-5">Change your infomation</a>
+                            <a href="@Url.Action("Index", "Home", null, Request.Url.Scheme)" class="btn btn-primary py-3 px-5">Back</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+
+}
+else
+{
+    <!-- Header Start -->
+    <div class="jumbotron jumbotron-fluid page-header position-relative overlay-bottom" style="margin-bottom: 90px;">
+        <div class="container text-center py-5">
+            <h1 class="text-white display-1">Account</h1>
+            <div class="d-inline-flex text-white mb-5">
+                <p class="m-0 text-uppercase"><a class="text-white" href="@Url.Action("Index", "Home", null , Request.Url.Scheme)">Home</a></p>
+                <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                <p class="m-0 text-uppercase">Account</p>
+            </div>
+            <div class="form-group text-white">
+                <b>User Name</b>
+                <div class="col-md-3 mx-auto text-white">
+                    @Html.DisplayFor(model => model.Username)
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <h5>You have not registered as a student</h5>
+    <!-- Header End -->
+}
+
+@*hình ảnh*@
+<style>
+    .image-preview {
+        max-width: 200px; /* Điều chỉnh kích thước tối đa của khung hình ảnh */
+        max-height: 200px;
+        overflow: hidden; /* Ẩn bớt nội dung hình ảnh */
+    }
+
+        .image-preview img {
+            max-width: 100%; /* Điều chỉnh kích thước tối đa của hình ảnh */
+            max-height: 100%;
+            object-fit: contain; /* Đảm bảo hình ảnh không bị méo khi thu nhỏ */
+        }
+</style>

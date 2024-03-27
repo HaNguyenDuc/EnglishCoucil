@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <div class="row justify-content-center bg-image mx-0 mb-5">
+        <div class="col-lg-6 py-5">
+            <div class="bg-white p-5 my-5">
+                <h1 class="text-center mb-4">Being New Students</h1>
+                <form>
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control bg-light border-0" placeholder="Your User Name" name="Username" style="padding: 30px 20px;">
+                                <div style="color:red; text-align:center">@ViewData["Loi1"]</div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="password" class="form-control bg-light border-0" placeholder="Your Password" name="Password" style="padding: 30px 20px;">
+                                <div style="color:red; text-align:center">@ViewData["Loi2"]</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="password" class="form-control bg-light border-0" placeholder="Confirm Your Password" name="PasswordConfirm" style="padding: 30px 20px;">
+                                <div style="color:red; text-align:center">@ViewData["Loi3"]</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary btn-block" type="submit" style="height: 60px;">Sign Up Now</button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <a class="small" href="@Url.Action("Login", "User", null, Request.Url.Scheme)">Already My Student? Join Us</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}

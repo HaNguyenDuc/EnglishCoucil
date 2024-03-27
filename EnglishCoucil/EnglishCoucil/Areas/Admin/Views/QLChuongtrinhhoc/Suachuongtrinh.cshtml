@@ -1,0 +1,109 @@
+﻿@model EnglishCoucil.Areas.Admin.Data.ChuongTrinhHoc
+
+@{
+    ViewBag.Title = "Suachuongtrinh";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAD.cshtml";
+}
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thay đổi thông tin chương trình học</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("HomeQL", "HomeAdmin", new { Area = "Admin" })">Home</a></li>
+                    <li class="breadcrumb-item active">Thay đổi thông tin chương trình học</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
+    TempData.Remove("SuccessMessage");
+}
+
+<p style="text-align:center;">
+    <a href=" @Url.Action("Themchuongtrinh", "QLchuongtrinhhoc")" class="btn btn-outline-warning">Thêm chương trình</a>
+</p>
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-danger">@ViewBag.SuccessMessage</div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
+    TempData.Remove("SuccessMessage");
+}
+<div class="content">
+    <div class="container-fluid">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.IDChuongTrinh)
+
+                <div class="form-group">
+                    <b>Mã chương trình học:</b>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.IDChuongTrinh)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <b>Tên chương trình:</b>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.TenChuongTrinh, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TenChuongTrinh, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <b>Số buổi học:</b>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SoBuoiHoc, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SoBuoiHoc, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <b>Thời lượng(tháng):</b>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ThoiLuong, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ThoiLuong, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <b>Giá tiền:</b>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.GiaTien, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.GiaTien, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <b>Mô tả</b>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-outline-success" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div style="text-align:center">
+            <a href=" @Url.Action("Chuongtrinhhoc", "QLchuongtrinhhoc")" class="btn btn-success">Back</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+﻿@model EnglishCoucil.Areas.Admin.Data.LopHoc
+
+@{
+    ViewBag.Title = "Sualophoccogv";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAD.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thay đổi thông tin lớp học</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("HomeQL", "HomeAdmin", new { Area = "Admin" })">Home</a></li>
+                    <li class="breadcrumb-item active">Thay đổi thông tin lớp học</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<div class="content">
+    <div class="container-fluid">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.IDLophoc)
+
+                <div class="form-group">
+                    <b>Mã lớp học</b>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.IDLophoc)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <b>Tên Lớp:</b>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.TenLopHoc, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TenLopHoc, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <b>Giảng viên:</b>
+
+                    <p>ID giảng viên: @ViewBag.idgv</p>
+                    <p>Giảng viên: @ViewBag.namegv</p>
+                    <div>
+                        <a href=" @Url.Action("Themgvvaolop", "QLLophoc", new { idlh = ViewBag.IDlh, idaction = 2 })" class="btn btn-outline-danger">Add Teacher</a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <b>Chương trình học:</b>
+
+                    <p>ID giảng viên: @ViewBag.idct</p>
+                    <p>Giảng viên: @ViewBag.namect</p>
+                    <div>
+                        <a href=" @Url.Action("Themctvaolop", "QLLophoc", new { Idremen = ViewBag.idgv, idlh = ViewBag.IDlh, idaction = 2 })" class="btn btn-outline-danger">Add Cource</a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-outline-success" />
+                    </div>
+                </div>
+            </div>
+        }
+        <div style="text-align:center">
+            <a href=" @Url.Action("Lophoc", "QLLophoc")" class="btn btn-success">Back</a>
+        </div>
+    </div>
+</div>
+

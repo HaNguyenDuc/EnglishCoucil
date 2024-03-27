@@ -1,0 +1,87 @@
+﻿@model IEnumerable<EnglishCoucil.Areas.Admin.Data.HocVien>
+
+@{
+    ViewBag.Title = "Hocvien";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAD.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách học viên</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("HomeQL", "HomeAdmin", new { Area = "Admin" })">Home</a></li>
+                    <li class="breadcrumb-item active">Danh sách học viên</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
+    TempData.Remove("SuccessMessage");
+}
+
+<p style="text-align:center;">
+    <a href=" @Url.Action("Themhocvien", "QLHocvien")" class="btn btn-outline-warning">Thêm học viên</a>
+</p>
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
+    TempData.Remove("SuccessMessage");
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    ViewBag.ErrorMessage = TempData["ErrorMessage"].ToString();
+    TempData.Remove("ErrorMessage");
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+<div class="card-body">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Mã học viên</th>
+                <th>Tên</th>
+                <th>Ngày sinh</th>
+                <th>Số điện thoại</th>
+                <th>Email</th>
+                <th>Trạng thái</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="search">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(model => item.IDHocvien)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TenHocVien)</td>
+                    <td>@item.NgaySinh.Value.ToString("dd/MM/yyyy")</td>
+                    <td>@Html.DisplayFor(modelItem => item.SoDienThoai)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TrangThaiHV.TenTrangThai)</td>
+                    <td>
+                        <a href=" @Url.Action("Suahocvien", "QLHocvien", new { IDhv = item.IDHocvien })" class="btn btn-outline-primary btn-sm">Edit</a> 
+                        <a href=" @Url.Action("Xemchitiet", "QLHocvien", new { IDhv = item.IDHocvien })" class="btn btn-outline-info btn-sm">Details</a>
+                        <a href=" @Url.Action("StudentTimetable", "QLHocvien", new { IDhv = item.IDHocvien })" class="btn btn-outline-secondary btn-sm">TimeTable</a>
+                        <a href="@Url.Action("Xoahocvien", "QLHocvien", new { IDhv = item.IDHocvien })" onclick="return confirm('Khi xóa sẽ mất hết dữ liệu học viên đã học, bạn có chắc chắn muốn xóa học viên này?');">
+                            <button class="btn btn-outline-danger btn-sm">Del</button>
+                        </a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

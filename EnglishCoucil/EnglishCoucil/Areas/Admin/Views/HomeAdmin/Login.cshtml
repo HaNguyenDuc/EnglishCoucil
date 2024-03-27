@@ -1,0 +1,64 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="~/Areas/Admin/Assets/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <!-- Theme style -->
+    <link href="~/Areas/Admin/Assets/dist/css/adminlte.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="mb-md-5 mt-md-4 pb-5 ">
+        <h2 class="fw-bold mb-2 text-uppercase text-center">Login</h2>
+        <p class=" mb-5 text-center">Please enter your login and password!</p>
+        @using (Html.BeginForm())
+        {
+    <section class="vh-100">
+        <div class="container-fluid h-custom">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-9 col-lg-6 col-xl-5">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                         class="img-fluid" alt="Sample image">
+                </div>
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                    <form>
+                        <!-- Username input -->
+                        <div class="form-outline mb-3">
+                            <label class="form-label" for="form3Example4">Username</label>
+                            <input type="text" id="form3Example4" class="form-control form-control-lg"
+                                   placeholder="Enter Username" name="TaiKhoan" />
+
+                        </div>
+                        <!-- Password input -->
+                        <div class="form-outline mb-3">
+                            <label class="form-label" for="form3Example4">Password</label>
+                            <input type="password" id="form3Example4" class="form-control form-control-lg"
+                                   placeholder="Enter password" name="MatKhau" />
+
+                        </div>
+
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                            <button class="btn btn-primary btn-lg"
+                                    style="padding-left: 2.5rem; padding-right: 2.5rem;">
+                                Login
+                            </button>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    
+     }
+    </div>
+</body>
+</html>

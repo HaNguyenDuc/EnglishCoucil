@@ -1,0 +1,110 @@
+﻿@model IEnumerable<EnglishCoucil.Areas.Admin.Data.HocVien>
+
+@{
+    ViewBag.Title = "themhvvaolop";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAD.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách học viên chưa có lớp</h1>
+                <h5>Lớp: @ViewBag.namelh</h5>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("HomeQL", "HomeAdmin", new { Area = "Admin" })">Home</a></li>
+                    <li class="breadcrumb-item active">Danh sách học viên</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+@if (TempData["SuccessMessage"] != null)
+{
+    ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
+    TempData.Remove("SuccessMessage");
+}
+<p style="text-align:center;">
+    <a href=" @Url.Action("Xemhvtronglop", "QLLophoc", new { IDlh = @ViewBag.Idlh })" class="btn btn-outline-warning">Xem danh sách</a>
+</p>
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
+    TempData.Remove("SuccessMessage");
+}
+
+
+<div class="content">
+    <div class="container-fluid">
+        <table class="table">
+            <tr>
+                <th>
+                    Mã học viên:
+                </th>
+                <th>
+                    Tên học viên:
+                </th>
+                <th>
+                    Ngày sinh:
+                </th>
+                <th>
+                    Địa chỉ:
+                </th>
+                <th>
+                    Số điện thoại:
+                </th>
+                <th>
+                    Email:
+                </th>
+
+                <th>
+                    Trạng thái
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th>
+                        @Html.DisplayFor(model => item.IDHocvien)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenHocVien)
+                    </td>
+                    <td>
+                        @{
+                            string formatdate = item.NgaySinh.Value.ToString("dd/MM/yyyy");
+                        }
+                        @Html.DisplayFor(modelItem => formatdate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiaChi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoDienThoai)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrangThaiHV.TenTrangThai)
+                    </td>
+                    <td>
+                        <a href=" @Url.Action("addtoclass", "QLLophoc", new { IDlh = @ViewBag.Idlh, IDhv = item.IDHocvien })" class="btn btn-outline-secondary btn-sm">AddToClass</a>
+                    </td>
+                </tr>
+            }
+        </table>
+        <div style="text-align:center">
+            <a href=" @Url.Action("Lophoc", "QLLophoc")" class="btn btn-success">Back</a>
+        </div>
+    </div>
+</div>

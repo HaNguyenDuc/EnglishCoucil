@@ -1,0 +1,39 @@
+﻿@if (Session["User"] != null)
+{
+    <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Welcome, @Session["User_name"]</a>
+        <div class="dropdown-menu m-0">
+            @if (Session["User"] != null && Session["IDlh"] != null)
+            {
+                <div style="border:solid; border-color:gray; border-width:0 0 1px 0"><a href="@Url.Action("showInfo", "User", new { IDhv = Session["IDhv"], IDtk = Session["IDtk"]}, Request.Url.Scheme)" class="dropdown-item">Infnomation</a></div>
+
+                <a href="@Url.Action("StudentTimetable", "User", new { IDhv = Session["IDhv"] }, Request.Url.Scheme)" class="dropdown-item">Your time table</a>
+                <a href="@Url.Action("viewScore", "User", new { IDhv = Session["IDhv"]}, Request.Url.Scheme)" class="dropdown-item">Your Score</a>
+                <a href="@Url.Action("CourceShow", "User", new { IDhv = Session["IDhv"], IDtk = Session["IDtk"], IDlh = Session["IDlh"] }, Request.Url.Scheme)" class="dropdown-item">Tuition Fee</a>
+                <div style="border:solid; border-color:gray; border-width:1px 0 0 0"><a href="@Url.Action("changePassword", "User", new {  IDtk = Session["IDtk"],IDhv = Session["IDhv"]})" class="dropdown-item">Change Password</a></div>
+                <div><a href="@Url.Action("Logoff", "User", null, Request.Url.Scheme)" class="dropdown-item">Logout</a></div>
+
+            }
+            else if (Session["User"] != null && Session["IDhv"] != null)
+            {
+                <div style="border:solid; border-color:gray; border-width:0 0 1px 0"><a href="@Url.Action("showInfo", "User", new { IDhv = Session["IDhv"], IDtk = Session["IDtk"]}, Request.Url.Scheme)" class="dropdown-item">Infnomation</a></div>
+                <a href="@Url.Action("StudentTimetable", "User", new { IDhv = Session["IDhv"] }, Request.Url.Scheme)" class="dropdown-item">Your time table</a>
+                <div style="border:solid; border-color:gray; border-width:1px 0 0 0"><a href="@Url.Action("changePassword", "User", new { IDtk = Session["IDtk"],IDhv = Session["IDhv"] })" class="dropdown-item">Change Password</a></div>
+                <div><a href="@Url.Action("Logoff", "User", null, Request.Url.Scheme)" class="dropdown-item">Logout</a></div>
+            }
+            else
+            {
+                <div style="border:solid; border-color:gray; border-width:0 0 1px 0"><a href="@Url.Action("showInfo", "User", new { IDhv = Session["IDhv"], IDtk = Session["IDtk"]}, Request.Url.Scheme)" class="dropdown-item">Infnomation</a></div>
+                <a href="@Url.Action("AllCource", "User", new { IDtk = Session["IDtk"] }, Request.Url.Scheme)" class="dropdown-item">Join Us?</a>
+                <div style="border:solid; border-color:gray; border-width:1px 0 0 0"><a href="@Url.Action("changePassword", "User", new {  IDtk = Session["IDtk"],IDhv = Session["IDhv"] })" class="dropdown-item">Change Password</a></div>
+                <div><a href="@Url.Action("Logoff", "User", null, Request.Url.Scheme)" class="dropdown-item">Logout</a></div>
+            }
+        </div>
+    </div>
+
+}
+else
+{
+    <a href="@Url.Action("Register", "User", null , Request.Url.Scheme)" class="btn btn-primary py-2 px-4 d-none d-lg-block" style="margin-right:5px;">Sign Up</a>
+    <a href="@Url.Action("Login", "User", null , Request.Url.Scheme)" class="btn btn-primary py-2 px-4 d-none d-lg-block">Sign In</a>
+}

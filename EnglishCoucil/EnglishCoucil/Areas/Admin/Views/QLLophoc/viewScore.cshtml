@@ -1,0 +1,104 @@
+﻿@model IEnumerable<EnglishCoucil.Areas.Admin.Data.ChiTietLopHoc>
+
+@{
+    ViewBag.Title = "viewScore";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAD.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Điểm học viên</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("HomeQL", "HomeAdmin", new { Area = "Admin" })">Home</a></li>
+                    <li class="breadcrumb-item active">Điểm học viên</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<div class="search">
+    <div class="content">
+        <div class="container-fluid">
+            <table class="table">
+                <tr>
+                    <td><strong>Tên học viên:</strong></td>
+                    <td>@ViewBag.namehv</td>
+                </tr>
+                <tr>
+                    <td><strong>Lớp:</strong></td>
+                    <td>@ViewBag.namelh</td>
+                </tr>
+                <tr>
+                    <td><strong>Điểm nghe:</strong></td>
+
+                    @if (Model.FirstOrDefault()?.DiemNghe != null)
+                    {
+                        <td>@Html.DisplayFor(model => model.FirstOrDefault().DiemNghe)</td>
+                    }
+                    else
+                    {
+                        <td>0</td>
+                    }
+
+                </tr>
+                <tr>
+                    <td><strong>Điểm nói:</strong></td>
+                    @if (Model.FirstOrDefault()?.DiemNoi != null)
+                    {
+                        <td>@Html.DisplayFor(model => model.FirstOrDefault().DiemNoi)</td>
+                    }
+                    else
+                    {
+                        <td>0</td>
+                    }
+                </tr>
+                <tr>
+                    <td><strong>Điểm đọc:</strong></td>
+                    @if (Model.FirstOrDefault()?.DiemDoc != null)
+                    {
+                        <td>@Html.DisplayFor(model => model.FirstOrDefault().DiemDoc)</td>
+                    }
+                    else
+                    {
+                        <td>0</td>
+                    }
+
+                </tr>
+                <tr>
+                    <td><strong>Điểm viết:</strong></td>
+                    @if (Model.FirstOrDefault()?.DiemViet != null)
+                    {
+                        <td>@Html.DisplayFor(model => model.FirstOrDefault().DiemViet)</td>
+                    }
+                    else
+                    {
+                        <td>0</td>
+                    }
+                </tr>
+                <tr>
+                    <td><strong>Điểm trung bình:</strong></td>
+                    @if (Model.FirstOrDefault()?.DiemTB != null)
+                    {
+                        <td>@Html.DisplayFor(model => model.FirstOrDefault().DiemTB)</td>
+                    }
+                    else
+                    {
+                        <td>0</td>
+                    }
+                </tr>
+            </table>
+            <p>
+                <a href=" @Url.Action("addScore", "QLLophoc", new { IDlh = @ViewBag.IDlh, IDhv = @ViewBag.IDhv, IDaction = 2})" class="btn btn-outline-warning">Sửa điểm</a>
+            </p>
+
+            <div style="text-align:center">
+                <a href=" @Url.Action("Xemhvtronglop", "QLLophoc", new { IDlh = @ViewBag.IDlh})" class="btn btn-success">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
